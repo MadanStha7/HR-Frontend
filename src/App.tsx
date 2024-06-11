@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import "./assets/css/style.css";
+import { Routes, Route } from "react-router-dom";
+import LoginGuard from "./guards/LoginGuard";
+import HomePage from "./pages/HomePage";
+import MainLayout from "./components/MainLayout";
+import ProfilePage from "./pages/Profile";
 
-function App() {
+const Dashboard: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <LoginGuard>
+            <MainLayout />
+          </LoginGuard>
+        }
+      />
 
-export default App;
+      <Route
+        path="/home"
+        element={
+          <LoginGuard>
+            <HomePage />
+          </LoginGuard>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <LoginGuard>
+            <ProfilePage />
+          </LoginGuard>
+        }
+      />
+    </Routes>
+  );
+};
+
+export default Dashboard;
